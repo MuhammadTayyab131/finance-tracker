@@ -1,7 +1,9 @@
+import json
 
 class Finance_tracker:
     def __init__(self):
         self.transactions = []
+        self.load_data()
 
     def get_amount(self):
         while True:
@@ -34,6 +36,7 @@ class Finance_tracker:
             "amount": amount,
             "category" : category
         })
+        self.save_data()
         print("Encome added successfuly!")
 
 # balance
@@ -60,6 +63,7 @@ class Finance_tracker:
             "amount": amount ,
             "category": category
         })
+        self.save_data()
         print("Expense added successfully")
 
 # show balance
@@ -76,6 +80,23 @@ class Finance_tracker:
             return
         for j,i in enumerate(self.transactions, start =1):
             print(f"{j} {i['type']} -> {i['amount']} category: {i['category']}")
+    
+
+    # save data function 
+    def save_data(self):
+        with open("transactions.json", "w")as f:
+            json.dump(self.transactions, f)
+
+
+# load data 
+
+    def load_data(self):
+        try:
+            with open("transactions.json", "r") as f:
+                self.transactions = json.load(f)
+        except FileNotFoundError:
+            self.transactions = []
+
 
     def show_menu(self):
         print("\n Personal Finance Tracker ")
