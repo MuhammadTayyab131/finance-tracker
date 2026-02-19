@@ -1,9 +1,6 @@
-import json
-
 class Finance_tracker:
     def __init__(self):
         self.transactions = []
-        self.load_data()
 
     def get_amount(self):
         while True:
@@ -11,110 +8,87 @@ class Finance_tracker:
             try:
                 amount = float(amount)
                 if amount <= 0:
-                    print("Amount must be greater then zero!")
+                    print("Amount must be greater than zero!")
                 else:
                     return amount
             except ValueError:
-                print("please Enter a valid number.")
+                print("Please enter a valid number.")
 
-# category
+    # Get category from user
     def get_category(self):
-        category = input("Enter the category (e.g food, transport, salary): ").strip()
+        category = input("Enter category (e.g., food, transport, salary): ").strip()
         if category == "":
-            category = "others"
+            category = "Other"
         return category
-    
 
-
-    #  income
-
+    # Add income
     def add_income(self):
         amount = self.get_amount()
         category = self.get_category()
         self.transactions.append({
             "type": "income",
             "amount": amount,
-            "category" : category
+            "category": category
         })
-        self.save_data()
-        print("Encome added successfuly!")
+        print("Income added successfully!")
 
-# balance
+    # Calculate balance
     def get_balance(self):
-            balance = 0
-            for i in self.transactions:
-                if i["type"] == "income":
-                    balance += i["amount"]
-                else:
-                    balance -= i["amount"]
-            return balance
+        balance = 0
+        for t in self.transactions:
+            if t["type"] == "income":
+                balance += t["amount"]
+            else:
+                balance -= t["amount"]
+        return balance
 
-
-    # expense
+    # Add expense
     def add_expense(self):
         amount = self.get_amount()
         balance = self.get_balance()
-        category = self.get_category()
         if amount > balance:
-            print("Expense exceeding current balance")
+            print("Expense exceeding current balance!")
             return
+        category = self.get_category()
         self.transactions.append({
             "type": "expense",
-            "amount": amount ,
+            "amount": amount,
             "category": category
         })
-        self.save_data()
-        print("Expense added successfully")
+        print("Expense added successfully!")
 
-# show balance
-
+    # View balance
     def view_balance(self):
         balance = self.get_balance()
         print(f"Current Balance: {balance}")
 
-    # transaction 
-
+    # View transaction history
     def history(self):
         if not self.transactions:
-            print("no transaction found yet")
+            print("No transactions found yet.")
             return
-        for j,i in enumerate(self.transactions, start =1):
-            print(f"{j} {i['type']} -> {i['amount']} category: {i['category']}")
-    
+        for j, t in enumerate(self.transactions, start=1):
+            print(f"{j}. {t['type'].capitalize()} - {t['amount']} - Category: {t['category']}")
 
-    # save data function 
-    def save_data(self):
-        with open("transactions.json", "w")as f:
-            json.dump(self.transactions, f)
-
-
-# load data 
-
-    def load_data(self):
-        try:
-            with open("transactions.json", "r") as f:
-                self.transactions = json.load(f)
-        except FileNotFoundError:
-            self.transactions = []
-
-
+    # Show menu
     def show_menu(self):
-        print("\n Personal Finance Tracker ")
+        print("\nPersonal Finance Tracker")
         print("1. Add Income")
         print("2. Add Expense")
         print("3. View Balance")
         print("4. View Transaction History")
         print("5. Exit")
+
+    # Main loop
     def output(self):
         while True:
             self.show_menu()
-            choice = input("choose an option: ")
-
+            choice = input("Choose an option: ")
             if choice == "1":
                 self.add_income()
             elif choice == "2":
                 self.add_expense()
-            elif choice =="3":
+            elif choice == "3":
                 self.view_balance()
             elif choice == "4":
                 self.history()
@@ -122,7 +96,8 @@ class Finance_tracker:
                 print("Exit")
                 break
             else:
-                print("Invalid aoption, try again")
+                print("Invalid option, try again.")
 
+# Run the program
 call = Finance_tracker()
 call.output()
