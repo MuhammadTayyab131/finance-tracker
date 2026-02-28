@@ -12,11 +12,11 @@ class Account:
 
     allowed_categories = ["Food", "Transport", "Salary"]
     def category(self):
-        category = input("enter category: ").strip().lower()
+        category = input("enter category(Food, Transport, Salary ): ").strip().lower()
         allowed = ["food", "transport", "salary"]
         if category not in allowed:
             return "others"
-        return category
+        return category.capitalize()
 
     def deposit(self,amount):
         category = self.category()

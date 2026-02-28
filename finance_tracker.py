@@ -18,11 +18,13 @@ class Finance_tracker:
                 print("please Enter a valid number.")
 
 # category
+    allowed_categories = ["Food", "Transport", "Salary"]
     def get_category(self):
-        category = input("Enter the category (e.g food, transport, salary): ").strip()
-        if category == "":
-            category = "others"
-        return category
+        get_category = input("enter category(Food, Transport, Salary ): ").strip().lower()
+        allowed = ["food", "transport", "salary"]
+        if get_category not in allowed:
+            return "others"
+        return get_category.capitalize()
     
 
 
