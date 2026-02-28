@@ -10,10 +10,12 @@ class Account:
         self.transaction_history = []
         self.load_data()
 
+    allowed_categories = ["Food", "Transport", "Salary"]
     def category(self):
-        category = input("enter categoery: (e.g Food, transport, salary)").strip()
-        if category == "":
-            category = "others"
+        category = input("enter category: ").strip().lower()
+        allowed = ["food", "transport", "salary"]
+        if category not in allowed:
+            return "others"
         return category
 
     def deposit(self,amount):
@@ -145,20 +147,6 @@ class Bank_system:
 
             else:
                 print("Invalid entery")
-
-    # # save data
-    # def save_data(self):
-    #     with open("transaction_history.json", "w") as f:
-    #         json.dump(self.transaction_history,f)
-
-    # # load data
-    # def load_data(self):
-    #     try:
-    #         with open("transaction_history.jeson", "r") as f:
-    #             self.transaction_history = json.load(f)
-    #     except FileNotFoundError:
-    #         self.transaction_history = []
-
 
     def main_menu(self):
         while True:
